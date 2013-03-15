@@ -17,11 +17,11 @@ import org.cytoscape.model.CyRow;
 
 public class EdgeOrganizerImpl implements EdgeOrganizer {
 
-	private static final String EDGE_TYPE_STRING = "Cluster Edge Type";
-	private static final String CONNECTION_TYPE_STRING = "Connection Type";
+	public static final String EDGE_TYPE_STRING = "Cluster Edge Type";
+	public static final String CONNECTION_TYPE_STRING = "Connection Type";
 	
-	private static final String EDGE_TYPE_INTERNAL = "internal";
-	private static final String EDGE_TYPE_BETWEEN = "between-clusters";
+	public static final String EDGE_TYPE_INTERNAL = "internal";
+	public static final String EDGE_TYPE_BETWEEN = "between-clusters";
 	
 	private Set<CyNode> clusterNodes;
 	private String groupColumnName;

@@ -4,10 +4,9 @@ import org.cytoscape.analysis.NetworkRandomizer;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.task.AbstractNetworkTaskFactory;
-import org.cytoscape.work.TaskFactory;
 import org.cytoscape.work.TaskIterator;
 
-public class RandomizedNetworkTaskFactory extends AbstractNetworkTaskFactory implements TaskFactory {
+public class RandomizedNetworkTaskFactory extends AbstractNetworkTaskFactory {
 
 	final private CyNetworkManager networkManager;
 	final private NetworkRandomizer randomizer;
@@ -21,17 +20,4 @@ public class RandomizedNetworkTaskFactory extends AbstractNetworkTaskFactory imp
 	public TaskIterator createTaskIterator(final CyNetwork network) {
 		return new TaskIterator(new RandomizeNetworkTask(network, networkManager, randomizer));
 	}
-
-	@Override
-	public TaskIterator createTaskIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isReady() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

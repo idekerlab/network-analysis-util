@@ -9,6 +9,8 @@ import java.util.Properties;
 
 import org.cytoscape.analysis.EdgeOrganizer;
 import org.cytoscape.analysis.NetworkRandomizer;
+import org.cytoscape.analysis.internal.task.GenerateReportTask;
+import org.cytoscape.analysis.internal.task.GenerateReportTaskFactory;
 import org.cytoscape.analysis.internal.task.OrganizeEdgesTaskFactory;
 import org.cytoscape.analysis.internal.task.RandomizedNetworkTaskFactory;
 import org.cytoscape.application.CyApplicationManager;
@@ -41,6 +43,8 @@ public class CyActivator extends AbstractCyActivator {
 
 		final RandomizedNetworkTaskFactory randomizedNetworkTaskFactory = new RandomizedNetworkTaskFactory(manager,
 				randomizer);
+		
+		final GenerateReportTaskFactory generateReportTaskFactory = new GenerateReportTaskFactory();
 
 		final Properties randomizedNetworkTaskFactoryProps = new Properties();
 		randomizedNetworkTaskFactoryProps.setProperty(ServiceProperties.ID, "randomizedNetworkTaskFactory");
@@ -57,5 +61,13 @@ public class CyActivator extends AbstractCyActivator {
 		organizeEdgesTaskFactoryProps.setProperty(TITLE, "Tagging");
 		organizeEdgesTaskFactoryProps.setProperty(ENABLE_FOR, "network");
 		registerAllServices(bc, organizeEdgesTaskFactory, organizeEdgesTaskFactoryProps);
+		
+		final Properties generateReportTaskFactoryProps = new Properties();
+		generateReportTaskFactoryProps.setProperty(ServiceProperties.ID, "generateReportTaskFactory");
+		generateReportTaskFactoryProps.setProperty(PREFERRED_MENU, "Tools");
+		generateReportTaskFactoryProps.setProperty(MENU_GRAVITY, "1.1");
+		generateReportTaskFactoryProps.setProperty(TITLE, "Generate Report");
+		generateReportTaskFactoryProps.setProperty(ENABLE_FOR, "network");
+		registerAllServices(bc, generateReportTaskFactory, generateReportTaskFactoryProps);
 	}
 }
