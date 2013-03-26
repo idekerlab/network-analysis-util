@@ -39,10 +39,11 @@ public class ReportGenerator {
 	}
 
 	/**
-	 * a. the total #edges in/total #nodes b. the total #edges out/total #nodes
+	 * a. the total #edges in/total #nodes
+	 * b. the total #edges out/total #nodes
 	 * 
-	 * c. the %nodes that have > x% of the edges in d. the %nodes that have > x%
-	 * of the edges out
+	 * c. the %nodes that have > x% of the edges in
+	 * d. the %nodes that have > x% of the edges out
 	 * 
 	 * where a. and b. represent the average hub size and c. and d. represent
 	 * the % of large hubs.
@@ -128,7 +129,6 @@ public class ReportGenerator {
 		resultArray.add(hubRatioIn);
 		resultArray.add(hubRatioOut);
 		table.getRow(network.getSUID()).set(clusterName, resultArray);
-		
 
 	}
 }

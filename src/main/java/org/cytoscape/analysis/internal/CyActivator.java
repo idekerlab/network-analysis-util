@@ -9,6 +9,8 @@ import java.util.Properties;
 
 import org.cytoscape.analysis.EdgeOrganizer;
 import org.cytoscape.analysis.NetworkRandomizer;
+import org.cytoscape.analysis.internal.task.GenerateNetworkFilesTask;
+import org.cytoscape.analysis.internal.task.GenerateNetworkFilesTaskFactory;
 import org.cytoscape.analysis.internal.task.GenerateReportTask;
 import org.cytoscape.analysis.internal.task.GenerateReportTaskFactory;
 import org.cytoscape.analysis.internal.task.OrganizeEdgesTaskFactory;
@@ -45,6 +47,8 @@ public class CyActivator extends AbstractCyActivator {
 				randomizer);
 		
 		final GenerateReportTaskFactory generateReportTaskFactory = new GenerateReportTaskFactory();
+		
+		final GenerateNetworkFilesTaskFactory generateNetworkFilesTaskFactory = new GenerateNetworkFilesTaskFactory(manager, randomizer, organizer);
 
 		final Properties randomizedNetworkTaskFactoryProps = new Properties();
 		randomizedNetworkTaskFactoryProps.setProperty(ServiceProperties.ID, "randomizedNetworkTaskFactory");
@@ -69,5 +73,13 @@ public class CyActivator extends AbstractCyActivator {
 		generateReportTaskFactoryProps.setProperty(TITLE, "Generate Report");
 		generateReportTaskFactoryProps.setProperty(ENABLE_FOR, "network");
 		registerAllServices(bc, generateReportTaskFactory, generateReportTaskFactoryProps);
+		
+		final Properties generateNetworkFilesTaskFactoryProps = new Properties();
+		generateNetworkFilesTaskFactoryProps.setProperty(ServiceProperties.ID, "generateNetworkFilesTaskFactory");
+		generateNetworkFilesTaskFactoryProps.setProperty(PREFERRED_MENU, "Tools");
+		generateNetworkFilesTaskFactoryProps.setProperty(MENU_GRAVITY, "1.1");
+		generateNetworkFilesTaskFactoryProps.setProperty(TITLE, "Generate Randomized Network Files");
+		generateNetworkFilesTaskFactoryProps.setProperty(ENABLE_FOR, "network");
+		registerAllServices(bc, generateNetworkFilesTaskFactory, generateNetworkFilesTaskFactoryProps);
 	}
 }

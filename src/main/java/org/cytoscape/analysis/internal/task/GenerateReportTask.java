@@ -9,7 +9,7 @@ import org.cytoscape.work.Tunable;
 public class GenerateReportTask extends AbstractNetworkTask {
 
 	@Tunable(description="Threshold")
-	private double threshold = 0.3d;
+	public double threshold = 0.1d;
 
 	private ReportGenerator reportGenerator = new ReportGenerator();
 
