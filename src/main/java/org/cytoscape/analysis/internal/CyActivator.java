@@ -9,18 +9,17 @@ import java.util.Properties;
 
 import org.cytoscape.analysis.EdgeOrganizer;
 import org.cytoscape.analysis.NetworkRandomizer;
-import org.cytoscape.analysis.internal.task.GenerateNetworkFilesTask;
 import org.cytoscape.analysis.internal.task.GenerateNetworkFilesTaskFactory;
-import org.cytoscape.analysis.internal.task.GenerateReportTask;
 import org.cytoscape.analysis.internal.task.GenerateReportTaskFactory;
 import org.cytoscape.analysis.internal.task.OrganizeEdgesTaskFactory;
 import org.cytoscape.analysis.internal.task.RandomizedNetworkTaskFactory;
+import org.cytoscape.analysis.internal.task.RunWorkflowTaskFactory;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.session.CyNetworkNaming;
+import org.cytoscape.task.create.NewNetworkSelectedNodesOnlyTaskFactory;
 import org.cytoscape.work.ServiceProperties;
-import org.cytoscape.work.TaskFactory;
 import org.osgi.framework.BundleContext;
 
 public class CyActivator extends AbstractCyActivator {
@@ -34,6 +33,7 @@ public class CyActivator extends AbstractCyActivator {
 		final CyNetworkManager manager = getService(bc, CyNetworkManager.class);
 		final CyNetworkNaming namingUtil = getService(bc, CyNetworkNaming.class);
 		final CyApplicationManager applicationManager = getService(bc, CyApplicationManager.class);
+		final NewNetworkSelectedNodesOnlyTaskFactory fromSelection = getService(bc, NewNetworkSelectedNodesOnlyTaskFactory.class);
 
 		final NetworkRandomizer randomizer = new ShuffleTargetRandomizer(namingUtil);
 		Properties properties = new Properties();
@@ -49,6 +49,16 @@ public class CyActivator extends AbstractCyActivator {
 		final GenerateReportTaskFactory generateReportTaskFactory = new GenerateReportTaskFactory();
 		
 		final GenerateNetworkFilesTaskFactory generateNetworkFilesTaskFactory = new GenerateNetworkFilesTaskFactory(manager, randomizer, organizer);
+
+		final RunWorkflowTaskFactory runWorkflowTaskFactory = new RunWorkflowTaskFactory(applicationManager, organizer, fromSelection, randomizer, manager);
+		
+		final Properties runWorkflowTaskFactoryProps = new Properties();
+		runWorkflowTaskFactoryProps.setProperty(ServiceProperties.ID, "runWorkflowTaskFactory");
+		runWorkflowTaskFactoryProps.setProperty(PREFERRED_MENU, "Tools");
+		runWorkflowTaskFactoryProps.setProperty(MENU_GRAVITY, "1.1");
+		runWorkflowTaskFactoryProps.setProperty(TITLE, "Run Randomization");
+		runWorkflowTaskFactoryProps.setProperty(ENABLE_FOR, "network");
+		registerAllServices(bc, runWorkflowTaskFactory, runWorkflowTaskFactoryProps);
 
 		final Properties randomizedNetworkTaskFactoryProps = new Properties();
 		randomizedNetworkTaskFactoryProps.setProperty(ServiceProperties.ID, "randomizedNetworkTaskFactory");

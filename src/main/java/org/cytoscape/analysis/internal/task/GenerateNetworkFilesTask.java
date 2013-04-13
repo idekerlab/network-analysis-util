@@ -7,10 +7,13 @@ import java.util.Map;
 
 import org.cytoscape.analysis.EdgeOrganizer;
 import org.cytoscape.analysis.NetworkRandomizer;
-import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.task.AbstractNetworkTaskFactory;
+import org.cytoscape.task.create.NewNetworkSelectedNodesOnlyTaskFactory;
 import org.cytoscape.work.AbstractTask;
+import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
 import org.cytoscape.work.util.ListSingleSelection;
@@ -33,6 +36,7 @@ public class GenerateNetworkFilesTask extends AbstractTask {
 	private final CyNetworkManager networkManager;
 	private final NetworkRandomizer randomizer;
 	private final EdgeOrganizer organizer;
+	private NewNetworkSelectedNodesOnlyTaskFactory newNetworkFactory;
 	
 	private final Map<String, CyNetwork> title2networkMap;
 	
@@ -71,6 +75,24 @@ public class GenerateNetworkFilesTask extends AbstractTask {
 		for(int i=0; i<numIteration; i++) {
 			this.insertTasksAfterCurrentTask(new RandomizeNetworkTask(parent, networkManager, randomizer));
 		}
+	}
+	
+	private final class SelectFromParentTask extends AbstractNetworkTaskFactory {
+
+		private final CyNetwork childNetwork;
+		
+		public SelectFromParentTask(final CyNetwork childNetwork) {
+			this.childNetwork = childNetwork;
+		}
+		
+		@Override
+		public TaskIterator createTaskIterator(CyNetwork parentNetwork) {
+			final List<CyNode> childNodes = childNetwork.getNodeList();
+			
+			
+			return null;
+		}
+		
 	}
 
 }
